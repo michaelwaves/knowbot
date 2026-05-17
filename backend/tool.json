@@ -1,0 +1,96 @@
+{
+  "type": "webhook",
+  "name": "submit_request",
+  "description": "Submit the guest's service request to the hotel. Call this exactly once per call, after you have a clear ask and confirmed the room number.",
+  "api_schema": {
+    "url": "https://saskatchewan-earth-streams-striking.trycloudflare.com/api/agent/voice",
+    "method": "POST",
+    "path_params_schema": [],
+    "query_params_schema": [],
+    "request_body_schema": {
+      "id": "body",
+      "type": "object",
+      "description": "Payload posted to Knowbot's voice webhook.",
+      "required": true,
+      "properties": [
+        {
+          "id": "guest_id",
+          "type": "string",
+          "description": "The UUID of the calling guest. The exact value is provided in your system prompt as {{guest_id}}. Pass that string through verbatim. Never invent or modify it.",
+          "dynamic_variable": "",
+          "constant_value": "",
+          "value_type": "llm_prompt",
+          "required": true,
+          "enum": null
+        },
+        {
+          "id": "room_number",
+          "type": "string",
+          "description": "The guest's room number. The exact value is provided in your system prompt as {{room_number}}. Pass that string through verbatim. Never invent it.",
+          "dynamic_variable": "",
+          "constant_value": "",
+          "value_type": "llm_prompt",
+          "required": true,
+          "enum": null
+        },
+        {
+          "id": "description",
+          "type": "string",
+          "description": "Plain-text description of what the guest needs (e.g. 'extra towels', 'AC running warm', 'late checkout to 1pm'). One sentence is ideal.",
+          "dynamic_variable": "",
+          "constant_value": "",
+          "value_type": "llm_prompt",
+          "required": true,
+          "enum": null
+        },
+        {
+          "id": "priority",
+          "type": "string",
+          "description": "Urgency of the request. Use 'urgent' only for safety, health, or anything making the room unusable. Default to 'medium' when unsure.",
+          "dynamic_variable": "",
+          "constant_value": "",
+          "value_type": "llm_prompt",
+          "required": false,
+          "enum": ["low", "medium", "high", "urgent"]
+        },
+        {
+          "id": "notes",
+          "type": "string",
+          "description": "Optional extra detail for the staff member who will handle it (e.g. timing, location in room, guest preferences).",
+          "dynamic_variable": "",
+          "constant_value": "",
+          "value_type": "llm_prompt",
+          "required": false,
+          "enum": null
+        }
+      ],
+      "value_type": "llm_prompt"
+    },
+    "request_headers": [
+      {
+        "type": "value",
+        "name": "Content-Type",
+        "value": "application/json"
+      },
+      {
+        "type": "value",
+        "name": "Authorization",
+        "value": "Bearer local-dev-secret"
+      }
+    ],
+    "content_type": "application/json",
+    "auth_connection": null
+  },
+  "response_timeout_secs": 20,
+  "dynamic_variables": {
+    "dynamic_variable_placeholders": {}
+  },
+  "assignments": [],
+  "disable_interruptions": false,
+  "pre_tool_speech": "auto",
+  "tool_call_sound": null,
+  "tool_call_sound_behavior": "auto",
+  "execution_mode": "immediate",
+  "tool_error_handling_mode": "auto",
+  "response_mocks": []
+}
